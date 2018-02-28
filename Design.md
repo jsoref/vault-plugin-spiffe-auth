@@ -49,7 +49,8 @@ In the below example, the two trust domains `insurance` and `consumer` would mos
 
 ## Vault Identity Mapping 
 [Vault Identity Secrets Engine Documentation](https://www.vaultproject.io/docs/secrets/identity/index.html)
-Given the possible structure combinations as seen in the examples of SPIFFE IDs and Trust Domains Vault Identity Mappings will translate to the following simplified levels:
+Given the possible structure combinations as seen in the examples of SPIFFE IDs and Trust Domains Vault Identity Mappings will translate to the following simplified levels: 
+
 | SPIFFE       | Vault  |
 | ------------ | ------ |
 | Trust Domain | [Group](https://www.vaultproject.io/api/secret/identity/entity.html)  |
@@ -67,7 +68,15 @@ This will allow the operator to assign policy to a Trust Domain level and additi
 As previously mentioned in this document Auth Mount points will be mapped to Trust Domains as a **1-1** relationship
 
 ## Authentication Flow
-**TODO**
+A simplified happy path authentication flow would look something like:
+
+![](images/auth_flow.png)
+
+1. Application requests a SPIFFE ID from the local SPIRE server which returns an SVID, private key, CA, etc
+2. Application calls the Vault auth endpoint for the plugin passing the SVID as a parameter
+3. Vault validates the SVID against the pre-configured CA and returns a Vault token for the mapped identity
+4. Application uses Vault token to request secrets
+5. If token is valid and token has permission to secret, returns secret
 
 ## Assumptions
 * SPIFFE allows a Trust Domain to be signed by a parent Domain forming a chain of trust, it is assumed that Vault would validate an SVID based on the full CA bundle and would **NOT** validate a leaf node based on the Root CA.
