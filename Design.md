@@ -4,7 +4,7 @@ This document contains the high-level implementation design.
 ## SPIFFE Identity
 [SPIFFE Identity Documentation](https://github.com/spiffe/spiffe/blob/master/standards/SPIFFE-ID.md#2-spiffe-identity)
 
-The SPIFFE ID contained within the SPIFFE Document (SVID) is represented by the URI syntax `spiffe://[trust_domain]/[path]`. The Trust Domain is a required element and represents the top level of trust for a logical separation.  Path is the element which represents the unique name for the application or service and follows a canonical URI path.  The structure of the path is determined by the operator of the system and paths may be used to identify sub divisions within a service.  Operators can choose to build SPIFFE IDs in a number of ways, for example the payments queue in the following examples could be constructed by adding a Trust Domain which is a leaf on the prod trust domain or it may be constructed as a path on the prod trust domain.
+The SPIFFE ID contained within the SPIFFE Document (SVID) is represented by the URI syntax `spiffe://[trust_domain]/[path]`. The Trust Domain is a required element and represents the top level of trust for a logical separation.  Path is the element which represents the unique name for the application or service and follows a canonical URI path.  The structure of the path is determined by the operator of the system and paths may be used to identify sub divisions within a service.  Operators can choose to build SPIFFE IDs in a number of ways, for example the payments queue in the following examples could be constructed by creating a dedicated Trust Domain (which may or may not be signed by the prod trust domain) or it may be constructed as a path on the prod trust domain.
 
 | SPIFFE ID                                   | Trust Domain  | Application ID       | Comments                                           |
 | ------------------------------------------- | ------------- | -------------------- | -------------------------------------------------- |
@@ -49,7 +49,7 @@ In the below example, the two trust domains `insurance` and `consumer` would mos
 
 ## Vault Identity Mapping 
 [Vault Identity Secrets Engine Documentation](https://www.vaultproject.io/docs/secrets/identity/index.html)
-Given the possible structure combinations as seen in the examples of SPIFFE IDs and Trust Domains Vault Identity Mappings will translate to the following simplified levels: 
+Given the possible structure combinations as seen in the examples of SPIFFE IDs and Trust Domains Vault Identity Mappings will translate to the following simplified levels:
 
 | SPIFFE       | Vault  |
 | ------------ | ------ |
