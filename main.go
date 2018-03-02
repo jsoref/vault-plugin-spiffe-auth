@@ -1,10 +1,12 @@
 package main
 
 import (
+	"context"
 	"log"
 	"os"
 
 	"github.com/hashicorp/vault/helper/pluginutil"
+	"github.com/hashicorp/vault/logical"
 	"github.com/hashicorp/vault/logical/plugin"
 )
 
@@ -22,4 +24,8 @@ func main() {
 	}); err != nil {
 		log.Fatal(err)
 	}
+}
+
+func Factory(ctx context.Context, c *logical.BackendConfig) (logical.Backend, error) {
+	return nil, nil
 }
