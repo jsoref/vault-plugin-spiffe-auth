@@ -26,6 +26,7 @@ func main() {
 	}
 }
 
+// Factory does something
 func Factory(ctx context.Context, c *logical.BackendConfig) (logical.Backend, error) {
-	return nil, nil
+	return Backend(c), nil
 }
