@@ -9,6 +9,20 @@ and maintain your own Vault auth plugin.
 
 For more information on building a plugin, see the [accompanying blog post](https://www.hashicorp.com/blog/building-a-vault-secure-plugin).
 
+## Generating a SVID
+To generate an SVID use the example spire docker image
+
+```bash
+$ make generate_svid
+```
+
+This process will generate an SPIFFE SVID and output into the ./example_svid folder
+
+A spire demo server with a running agent and server can be run by using the following command
+```bash
+$ make run_spire_docker
+```
+
 ## Setup
 
 The setup guide assumes some familiarity with Vault and Vault's plugin
