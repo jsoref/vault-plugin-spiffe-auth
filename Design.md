@@ -60,8 +60,8 @@ This will allow the operator to assign policy to a Trust Domain level and additi
 
 | SPIFFE ID                                | Vault Group      | Vault Entity       |
 | ---------------------------------------- | ---------------- | ------------------ |
-| spiffe://prod.acme.net/currency/web      | prod.acme.net    | currency/frontend  |
-| spiffe://staging.acme.net/currency/web   | staging.acme.net | currency/frontend  |
+| spiffe://prod.acme.net/currency/web      | prod.acme.net    | currency/web  |
+| spiffe://staging.acme.net/currency/web   | staging.acme.net | currency/web  |
 | spiffe://prod.acme.net/123-123d-sdfs3    | prod.acme.net    | 123-123d-sdfs3     |
 
 ## Vault Auth Endpoint Mapping
@@ -77,6 +77,38 @@ A simplified happy path authentication flow would look something like:
 3. Vault validates the SVID against the pre-configured CA and returns a Vault token for the mapped identity
 4. Application uses Vault token to request secrets
 5. If token is valid and token has permission to secret, returns secret
+
+## Vault Endpoints
+The below outline shows how a user would use the plugin:
+
+### Config
+The auth endpoint must be configured with a trust domain this is configured with the ca bundle for the trust domain in order to validate login requests
+
+```bash
+$ vault write auth/spiffe/config trust_domain=prod.acme.net ca_bundle=@bundle.pem
+```
+
+#### Assigning policy to a trust domain
+Policy can be assigned at a trust domain level, all authenticated users/services who are part of this domain will be assigned the policy at this level.
+
+```bash
+$ vault write auth/spiffe/map/domain value=dev-policy
+```
+
+#### Assigning policy to an individual SPIFFE id
+In addition to a trust domain level policy can be assigned to an individual SPIFEE Id, because a spiffe ID can be both URI path style and free text, it may be useful to specify the spiffe Id as part of a the request parameters rather than request path.
+
+```bash
+$ vault write auth/spiffe/map/id spiffe_id=123-121321 value=web-policy
+$ vault write auth/spiffe/map/id spiffe_id=currency/web value=web-policy
+```
+
+instead of:
+
+```bash
+$ vault write auth/spiffe/map/123-123121 value=web-policy
+$ vault write auth/spiffe/map/currency/web value=web-policy
+```
 
 ## Assumptions
 * SPIFFE allows a Trust Domain to be signed by a parent Domain forming a chain of trust, it is assumed that Vault would validate an SVID based on the full CA bundle and would **NOT** validate a leaf node based on the Root CA.
