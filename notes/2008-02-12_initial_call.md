@@ -5,7 +5,7 @@
 * Evan Gilman
 
 ## Notes:
-* Dev / Testing should be pretty straight forward with Spire uisng the Docker based workflow
+* Dev / Testing should be pretty straight forward with Spire using the Docker based workflow
 * Once the agents starts correctly the SVID is output to disk, this can then be used to auth against Vault
 * Every service requires a Spire registration
 * Possible that there may be multiple trust domains
