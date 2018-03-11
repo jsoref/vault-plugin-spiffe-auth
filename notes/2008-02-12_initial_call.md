@@ -15,4 +15,4 @@
 
 ## Questions:
 The main question around implementation is should a SPIFFE auth endpoint be mounted for each Trust Domain or on a higher level.  The main consideration around this is that the service would potentially not know it's Trust Domain without decoding the SPIFFE ID and would need to call a custom endpoint based on this result.  This would lead to a better UX flow where a single auth endpoint is mounted and Vault would infer the Trust Domain from the SPIFFE ID encoded into the SVID.  
-From further reading it seems that the Trust Domain into which a service is placed would be known by the operator and therfore the Vault Auth Path could be provided to the service as configuration.  Having a 1-1 mapping between Trust Domain and Vault Auth endpoint would be more inline with other auth methods such as the github auth.
+From further reading it seems that the Trust Domain into which a service is placed would be known by the operator and therefore the Vault Auth Path could be provided to the service as configuration.  Having a 1-1 mapping between Trust Domain and Vault Auth endpoint would be more inline with other auth methods such as the github auth.
